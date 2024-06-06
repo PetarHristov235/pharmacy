@@ -19,7 +19,7 @@ public class RateServiceImpl implements RateService {
 
 
     @Override
-    public List<RateEntity> findRatesByBookId(Long bookId) {
-        return rateRepository.findRatesByBookId(bookId);
+    public List<RateEntity> findRatesByMedicineId(Long medicineId) {
+        return rateRepository.findRatesByMedicineId(medicineId);
     }
 }

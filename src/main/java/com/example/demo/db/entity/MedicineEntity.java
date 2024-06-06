@@ -8,45 +8,41 @@ import lombok.Setter;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.data.domain.Persistable;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Entity
-@Table(name = "book")
+@Table(name = "medicine")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class BookEntity implements Persistable<Long> {
+public class MedicineEntity implements Persistable<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookIdSeqGenerator")
-    @SequenceGenerator(name = "bookIdSeqGenerator", sequenceName = "book_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medicineIdSeqGenerator")
+    @SequenceGenerator(name = "medicineIdSeqGenerator", sequenceName = "medicine_id_seq",
+            allocationSize = 1)
     private Long id;
 
-    @Column(name = "book_name")
-    private String bookName;
+    @Column(name = "medicine_name")
+    private String medicineName;
 
-    @Column(name = "author")
-    private String author;
-
-    @Column (name = "genre")
-    private String genre;
-
-    @Column(name = "book_details", length = 3000)
-    private String bookDetails;
+    @Column(name = "medicine_details", length = 3000)
+    private String medicineDetails;
 
     @Column(name = "stock_count")
     private Integer stockCount;
 
+    @Column(name = "prescription_required")
+    private BigDecimal isPrescriptionRequired;
     @Lob
     @Column(name = "cover")
     private byte[] cover;
 
     @OneToMany
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "medicine_id")
     private List<RateEntity> rateEntity;
 
     @Transient
@@ -69,7 +65,7 @@ public class BookEntity implements Persistable<Long> {
             coverBase64encoded = base64Encoded;
         }
 
-        if(rateEntity != null && !rateEntity.isEmpty()) {
+        if (rateEntity != null && !rateEntity.isEmpty()) {
             avgRate = BigDecimal.valueOf(rateEntity.stream().mapToInt(RateEntity::getRate).average().orElse(0));
         } else {
             avgRate = BigDecimal.ZERO;

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface RateRepository extends JpaRepository<RateEntity,Long> {
     @Query("""
-            SELECT rate FROM RateEntity rate where rate.bookId = :bookId
+            SELECT rate FROM RateEntity rate where rate.medicineId = :medicineId
             """)
-    List<RateEntity> findRatesByBookId(@Param("bookId") Long bookId);
+    List<RateEntity> findRatesByMedicineId(@Param("medicineId") Long medicineId);
 }

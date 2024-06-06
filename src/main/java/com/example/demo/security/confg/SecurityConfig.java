@@ -29,42 +29,43 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((authorize) ->
-                        authorize
-                                .requestMatchers(
-                                        antMatcher("/login"),
-                                        antMatcher("/login/**"),
-                                        antMatcher("/register"),
-                                        antMatcher("/registerProcessing"),
-                                        antMatcher("/"),
-                                        antMatcher("bookDetails"),
-                                        antMatcher("index"),
-                                        antMatcher("/css/**"),
-                                        //For testing
-                                        antMatcher("/addBook"),
-                                        antMatcher("/listUsers"),
-                                        antMatcher("/random"),
-                                        antMatcher("/filteredBooks"),
-                                        antMatcher("/search"),
-                                        antMatcher("/books/*")
-                                )
-                                .permitAll()
-
-                                .anyRequest().authenticated()
-                )
-                .logout(
-                        logout -> logout
-                                .logoutSuccessUrl("/")
-                )
-                .formLogin(
-                        form -> form
-                                .loginPage("/login")
-                                .usernameParameter("username")
-                                .passwordParameter("password")
-                                .loginProcessingUrl("/loginProcessing")
-                                .defaultSuccessUrl("/", true)
-                                .permitAll()).build();
+        return http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated()).build();
+        //        return
+//                http.csrf(AbstractHttpConfigurer::disable)
+//                .authorizeHttpRequests((authorize) ->
+//                        authorize.requestMatchers(
+//                                        antMatcher("/login"),
+//                                        antMatcher("/login/**"),
+//                                        antMatcher("/register"),
+//                                        antMatcher("/registerProcessing"),
+//                                        antMatcher("/"),
+//                                        antMatcher("bookDetails"),
+//                                        antMatcher("index"),
+//                                        antMatcher("/css/**"),
+//                                        //For testing
+//                                        antMatcher("/addBook"),
+//                                        antMatcher("/listUsers"),
+//                                        antMatcher("/random"),
+//                                        antMatcher("/filteredBooks"),
+//                                        antMatcher("/search"),
+//                                        antMatcher("/books/*")
+//                                )
+//                                .permitAll()
+//
+//                                .anyRequest().authenticated()
+//                )
+//                .logout(
+//                        logout -> logout
+//                                .logoutSuccessUrl("/")
+//                )
+//                .formLogin(
+//                        form -> form
+//                                .loginPage("/login")
+//                                .usernameParameter("username")
+//                                .passwordParameter("password")
+//                                .loginProcessingUrl("/loginProcessing")
+//                                .defaultSuccessUrl("/", true)
+//                                .permitAll()).build();
     }
 
     @Autowired

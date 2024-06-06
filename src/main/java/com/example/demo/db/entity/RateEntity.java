@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.domain.Persistable;
 
-import java.time.LocalDate;
-
 @Entity
 @Table(name = "\"rate\"")
 @AllArgsConstructor
@@ -27,8 +25,8 @@ public class RateEntity implements Persistable<Long> {
     @Column(name = "comment",length = 3000)
     private String comment;
 
-    @Column(name = "book_id")
-    private Long bookId;
+    @Column(name = "medicine_id")
+    private Long medicineId;
 
     @Override
     public boolean isNew() {
