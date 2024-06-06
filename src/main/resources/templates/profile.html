@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Начало</title>
+
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+
+</head>
+
+<body>
+
+<div class="topnav" id="myNav">
+    <div class="topnav-left">
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/listOrders}">Поръчки</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/bookStock}">Наличности</a>
+    </div>
+    <div class="topnav-center">
+        <a th:href="@{/}">Книгомания</a>
+    </div>
+
+    <div class="topnav-right">
+        <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<div class="container">
+    <h1>Моят Профил</h1>
+    <div>
+        <label>Потребителско име:</label>
+        <span th:text="${userProfile.username}"></span>
+    </div>
+    <div>
+        <label>Имейл:</label>
+        <span th:text="${userProfile.email}"></span>
+    </div>
+    <div>
+        <table class="tables">
+            <thead >
+            <tr>
+                <th>Книги</th>
+            </tr>
+            </thead >
+
+            <tbody>
+            <tr th:each="order : ${userOrders}">
+                <td th:text="${order.title}">book</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

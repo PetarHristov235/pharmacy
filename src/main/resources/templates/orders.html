@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Поръчки</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+
+<body>
+
+<div class="topnav" id="myNav">
+    <div class="topnav-left">
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/bookStock}">Наличности</a>
+    </div>
+    <div class="topnav-center">
+        <a th:href="@{/}">Книгомания</a>
+    </div>
+
+    <div class="topnav-right">
+        <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
+    </div>
+</div>
+<br>
+<br>
+<br>
+
+
+<div class="center" >
+    <h1>Поръчки</h1>
+</div>
+
+<div>
+    <table class="tables">
+        <thead >
+        <tr>
+            <th>ИД</th>
+            <th>Книга</th>
+            <th>Потребител</th>
+            <th>Телефон</th>
+            <th>Адрес</th>
+            <th>Дата</th>
+            <th>Действия</th>
+        </tr>
+        </thead >
+
+        <tbody>
+        <tr th:each="order : ${orders}">
+
+            <td th:text="${order.id}">id</td>
+            <td th:text="${order.title}">book</td>
+            <td th:text="${order.username}">user</td>
+            <td th:text="${order.phoneNumber}">genre</td>
+            <td th:text="${order.address}">price</td>
+            <td th:text="${order.date}">date</td>
+
+            <div >
+                <td>
+                    <a th:href="@{'/deleteOrder/'+${order.id}}">Изтрии</a>
+                    <a th:href="@{'/remind/'+${order.id}}">Напомни</a>
+                </td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+</body>
+</html>

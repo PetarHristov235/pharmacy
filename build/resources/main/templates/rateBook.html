@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>Начало</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+
+<body>
+<<div class="topnav" id="myNav">
+<div class="topnav-left">
+<a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
+<a sec:authorize="hasRole('ADMIN')" th:href="@{/listOrders}">Поръчки</a>
+<a sec:authorize="hasRole('ADMIN')" th:href="@{/bookStock}">Наличности</a>
+</div>
+<div class="topnav-center">
+<a th:href="@{/}">Книгомания</a>
+</div>
+
+<div class="topnav-right">
+<a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
+<a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
+<a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
+</div>
+</div>
+<br>
+<br>
+<br>
+
+
+<div class="wrapper">
+<form action="/saveRating" method="post" th:object="${rateEntity}" class="form">
+    <label><h2>Оценка:</h2></label><br>
+    <div class="rating-group">
+        <input type="radio" id="1" name="rating" value="1" th:field="*{rate}"><label for="1">1</label>
+    </div>
+    <div class="rating-group">
+        <input type="radio" id="2" name="rating" value="2" th:field="*{rate}"><label for="2">2</label>
+    </div>
+    <div class="rating-group">
+        <input type="radio" id="3" name="rating" value="3" th:field="*{rate}"><label for="3">3</label>
+    </div>
+    <div class="rating-group">
+        <input type="radio" id="4" name="rating" value="4" th:field="*{rate}"><label for="4">4</label>
+    </div>
+    <div class="rating-group">
+        <input type="radio" id="5" name="rating" value="5" th:field="*{rate}"><label for="5">5</label>
+    </div>
+    <p th:if="${error}" th:text="${error}" class="error"></p>
+    <label for="comment"><h2>Коментар:</h2></label><br>
+    <textarea id="comment" name="comment" rows="4" cols="50" th:field="*{comment}"></textarea><br>
+    <input type="hidden" id="bookId" name="bookId" value="${bookId}" th:field="*{bookId}">
+    <input type="submit" class="buttons" value="ОЦЕНИ">
+</form>
+</div>
+
+</body>
+</html>

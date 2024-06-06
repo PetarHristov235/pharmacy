@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Наличности</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+
+<body>
+
+<div class="topnav" id="myNav">
+    <div class="topnav-left">
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/listOrders}">Поръчки</a>
+
+    </div>
+    <div class="topnav-center">
+        <a th:href="@{/}">Име</a>
+    </div>
+
+    <div class="topnav-right">
+        <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
+    </div>
+</div>
+<br>
+<br>
+<br>
+
+
+<div class="center" >
+    <h1>Наличности</h1>
+</div>
+
+    <table class="tables">
+        <thead>
+        <tr>
+            <th>Уникален номер на книга</th>
+            <th>Име</th>
+            <th>Автор</th>
+            <th>Жанр</th>
+            <th>Налични бройки</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.bookName}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.genre}"></td>
+            <td th:text="${book.stockCount}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

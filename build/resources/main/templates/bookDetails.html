@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Детайли</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+
+<body>
+
+<div class="topnav" id="myNav">
+    <div class="topnav-left">
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/listOrders}">Поръчки</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/bookStock}">Наличности</a>
+    </div>
+    <div class="topnav-center">
+        <a th:href="@{/}">Книгомания</a>
+    </div>
+
+    <div class="topnav-right">
+        <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
+    </div>
+</div>
+<br>
+<br>
+<br>
+
+<div class="container-books">
+    <div th:if="${book != null}">
+        <div class="book-details">
+            <h2><span th:text="${book.bookName}"></span></h2>
+            <div class="image-container">
+                <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover" />
+            </div>
+            <div>
+                <p>Автор: <span th:text="${book.author}"></span></p>
+                <p>Жанр: <span th:text="${book.genre}"></span></p>
+                <p>Резюме: <span th:text="${book.bookDetails}"></span></p>
+                <p>Средна оценка: <span th:text="${#numbers.formatDecimal(book.avgRate, 1, 'COMMA', 2, 'POINT')}"></span></p>
+                <a class="buttons" sec:authorize="hasRole('USER')"  th:if="${book.stockCount >= 1}" th:href="@{'/orderBook/'+${book.id}}">Поръчай</a>
+                <a class="buttons" sec:authorize="hasRole('USER')" th:href="@{'/rateBook/'+${book.id}}">Оцени</a>
+                <a class="buttons" sec:authorize="hasRole('ADMIN')" th:href="@{'/editBook/'+${book.id}}">Редактирай</a>
+                <a class="buttons" sec:authorize="hasRole('ADMIN')" th:href="@{'/showRates/'+${book.id}}">Покажи оценките</a>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${book == null}" class="no-book">
+        <p>Няма такава книга</p>
+    </div>
+</div>
+
+
+</body>
+</html>

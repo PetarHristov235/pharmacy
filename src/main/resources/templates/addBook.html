@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Добавяне</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+</head>
+
+<body>
+
+<div class="topnav" id="myNav">
+    <div class="topnav-left">
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/listOrders}">Поръчки</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/bookStock}">Наличности</a>
+    </div>
+    <div class="topnav-center">
+        <a th:href="@{/}">Книгомания</a>
+    </div>
+
+    <div class="topnav-right">
+        <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
+    </div>
+</div>
+<br>
+<br>
+<br>
+
+<h1>Добавяне на книга</h1>
+
+<div class="container">
+    <form method="post" role="form" th:action="@{/saveBook}" th:object="${book}" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-25"><label>Корица</label></div>
+            <div class="col-75"><input id="image" name="image"  type="file" accept="image/*"/></div>
+        </div>
+
+        <div class="row">
+            <div class="col-25"><label>Заглавие</label></div>
+            <div class="col-75"><input id="bookName" name="title" placeholder="Въведи заглавие... " th:field="*{bookName}" type="text"/></div>
+        </div>
+
+        <div class="row">
+            <div class="col-25"><label>Автор</label></div>
+            <div class="col-75"><input id="author" name="author" placeholder="Въведи автор..." th:field="*{author}" type="text"/></div>
+        </div>
+
+        <div class="row">
+            <div class="col-25"><label>Жанр</label></div>
+            <div class="col-75"><input id="genre" name="genre" placeholder="Въведи жанр..." th:field="*{genre}" type="text"/></div>
+        </div>
+
+        <div class="row">
+            <div class="col-25"><label>Резюме</label></div>
+            <div class="col-75"><input id="bookDetails" name="bookDetails" placeholder="Въведи резюме..." th:field="*{bookDetails}" type="text"/></div>
+        </div>
+
+        <div class="row">
+            <div class="col-25"><label>Брой</label></div>
+            <div class="col-75"><input id="stockCount" name="stockCount" placeholder="Въведи количество..." th:field="*{stockCount}" type="text"/></div>
+        </div>
+
+        <div class="row">
+            <div class="center">
+                <input type="submit" class="buttons" value="Добави">
+            </div>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>
