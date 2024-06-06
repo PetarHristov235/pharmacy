@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
-      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
->
+      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="bg">
+
 <head>
     <meta charset="UTF-8">
     <title>Наличности</title>
@@ -14,10 +14,9 @@
     <div class="topnav-left">
         <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
         <a sec:authorize="hasRole('ADMIN')" th:href="@{/listOrders}">Поръчки</a>
-
     </div>
     <div class="topnav-center">
-        <a th:href="@{/}">Име</a>
+        <a th:href="@{/}">Горската аптека</a>
     </div>
 
     <div class="topnav-right">
@@ -39,20 +38,18 @@
     <table class="tables">
         <thead>
         <tr>
-            <th>Уникален номер на книга</th>
+            <th>Уникален номер на лекарство</th>
             <th>Име</th>
-            <th>Автор</th>
-            <th>Жанр</th>
+            <th>Детайли</th>
             <th>Налични бройки</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="book : ${books}">
-            <td th:text="${book.id}"></td>
-            <td th:text="${book.bookName}"></td>
-            <td th:text="${book.author}"></td>
-            <td th:text="${book.genre}"></td>
-            <td th:text="${book.stockCount}"></td>
+        <tr th:each="medicine : ${medicines}">
+            <td th:text="${medicine.id}"></td>
+            <td th:text="${medicine.medicineName}"></td>
+            <td th:text="${medicine.medicineDetails}"></td>
+            <td th:text="${medicine.stockCount}"></td>
         </tr>
         </tbody>
     </table>

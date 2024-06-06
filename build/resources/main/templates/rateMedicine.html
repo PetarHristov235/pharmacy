@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="bg">
+
 <head>
     <meta charset="UTF-8">
-    <title>Начало</title>
+    <title>Оцени</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 
 <body>
-<<div class="topnav" id="myNav">
-<div class="topnav-left">
-<a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
-<a sec:authorize="hasRole('ADMIN')" th:href="@{/listOrders}">Поръчки</a>
-<a sec:authorize="hasRole('ADMIN')" th:href="@{/bookStock}">Наличности</a>
-</div>
-<div class="topnav-center">
-<a th:href="@{/}">Книгомания</a>
-</div>
 
-<div class="topnav-right">
-<a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
-<a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
-<a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
-</div>
+<div class="topnav" id="myNav">
+    <div class="topnav-left">
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/listOrders}">Поръчки</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/medicineStock}">Наличности</a>
+    </div>
+    <div class="topnav-center">
+        <a th:href="@{/}">Горската аптека</a>
+    </div>
+
+    <div class="topnav-right">
+        <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
+    </div>
 </div>
 <br>
 <br>
@@ -50,7 +53,7 @@
     <p th:if="${error}" th:text="${error}" class="error"></p>
     <label for="comment"><h2>Коментар:</h2></label><br>
     <textarea id="comment" name="comment" rows="4" cols="50" th:field="*{comment}"></textarea><br>
-    <input type="hidden" id="bookId" name="bookId" value="${bookId}" th:field="*{bookId}">
+    <input type="hidden" id="medicineId" name="medicineId" value="${medicineId}" th:field="*{medicineId}">
     <input type="submit" class="buttons" value="ОЦЕНИ">
 </form>
 </div>

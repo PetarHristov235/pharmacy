@@ -71,4 +71,8 @@ public class MedicineEntity implements Persistable<Long> {
             avgRate = BigDecimal.ZERO;
         }
     }
+
+    public boolean isPrescriptionRequired() {
+        return this.isPrescriptionRequired != null && this.isPrescriptionRequired.compareTo(BigDecimal.ONE) == 0;
+    }
 }

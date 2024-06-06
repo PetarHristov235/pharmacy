@@ -10,7 +10,8 @@ public interface MedicineService {
     MedicineEntity getMedicineById(Long id);
     MedicineEntity saveMedicine(MedicineEntity Medicine);
     void deleteMedicineById(Long id);
-    List<MedicineEntity> filterMedicines(List<MedicineEntity> MedicinesList, String filterBy, String filterText);
+    List<MedicineEntity> filterMedicines(List<MedicineEntity> MedicinesList, String filterBy);
     List<MedicineEntity> sortMedicines(List<MedicineEntity> MedicinesList, String sortBy);
     void decreaseMedicineStockCount(MedicineEntity Medicine);
+    List<MedicineEntity> searchMedicines(List<MedicineEntity> MedicinesList, String filterText);
 }

@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -53,38 +54,46 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public List<MedicineEntity> sortMedicines(List<MedicineEntity> medicinesList, String sortBy) {
-        if (isValid(sortBy)) {
-            switch (sortBy) {
-                case "title":
-                    medicinesList.sort(Comparator.comparing(MedicineEntity::getMedicineName));
-                    break;
-                case "isPrescriptionRequired":
-                    medicinesList.sort(Comparator.comparing(MedicineEntity::getIsPrescriptionRequired));
-                    break;
-            }
-        }
-        return medicinesList;
-    }
-
-    @Override
     public void decreaseMedicineStockCount(MedicineEntity medicine) {
         medicine.setStockCount(medicine.getStockCount() - 1);
+        medicineRepository.save(medicine);
     }
 
     @Override
-    public List<MedicineEntity> filterMedicines(List<MedicineEntity> medicinesList, String filterBy, String filterText) {
-        if (isValid(filterBy) && isValid(filterText)) {
-            switch (filterBy) {
-                case "title" -> medicinesList = filterByTitle(medicinesList, filterText);
-                case "isPrescriptionRequired" ->
-                        medicinesList.sort(Comparator.comparing(MedicineEntity::getIsPrescriptionRequired));
+    public List<MedicineEntity> sortMedicines(List<MedicineEntity> medicinesList, String sortBy) {
+            switch (sortBy) {
+                case "ascending":
+                    medicinesList.sort(Comparator.comparing(MedicineEntity::getMedicineName));
+                    break;
+                case "descending":
+                    medicinesList.sort(Comparator.comparing(MedicineEntity::getMedicineName).reversed());
+                    break;
             }
-        }
         return medicinesList;
     }
 
-    private List<MedicineEntity> filterByTitle(List<MedicineEntity> medicines, String title) {
+    @Override
+    public List<MedicineEntity> filterMedicines(List<MedicineEntity> medicinesList, String filterBy) {
+            switch (filterBy)
+            {
+                case "withPrescription" -> medicinesList = filterMedicinesWithPrescription(medicinesList);
+                case "withoutPrescription" -> medicinesList = filterMedicinesWithoutPrescription(medicinesList);
+            }
+        return medicinesList;
+    }
+
+    @Override
+    public List<MedicineEntity> searchMedicines(List<MedicineEntity> medicinesList, String filterText) {
+        List<MedicineEntity> filteredMedicines = new ArrayList<>();
+        for (MedicineEntity medicine : medicinesList) {
+            if (matchesIgnoreCaseAndPartial(medicine.getMedicineName(), filterText)) {
+                filteredMedicines.add(medicine);
+            }
+        }
+        return filteredMedicines;
+    }
+
+    private List<MedicineEntity> filterByName(List<MedicineEntity> medicines, String title) {
         List<MedicineEntity> filteredMedicines = new ArrayList<>();
         for (MedicineEntity medicine : medicines) {
             if (matchesIgnoreCaseAndPartial(medicine.getMedicineName(), title)) {
@@ -94,6 +103,18 @@ public class MedicineServiceImpl implements MedicineService {
         return filteredMedicines;
     }
 
+    private List<MedicineEntity> filterMedicinesWithPrescription(List<MedicineEntity> medicines) {
+        return medicines.stream()
+                .filter(MedicineEntity::isPrescriptionRequired)
+                .collect(Collectors.toList());
+    }
+
+    private List<MedicineEntity> filterMedicinesWithoutPrescription(List<MedicineEntity> medicines) {
+        return medicines.stream()
+                .filter(medicine -> !medicine.isPrescriptionRequired())
+                .collect(Collectors.toList());
+    }
+
     private boolean matchesIgnoreCaseAndPartial(String text, String keyword) {
         String lowercaseText = text.toLowerCase();
         String lowercaseKeyword = keyword.toLowerCase();
@@ -101,7 +122,4 @@ public class MedicineServiceImpl implements MedicineService {
         return lowercaseText.contains(lowercaseKeyword);
     }
 
-    private boolean isValid(String str) {
-        return str != null && !str.isEmpty();
-    }
 }

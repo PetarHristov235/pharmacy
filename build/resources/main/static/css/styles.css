@@ -9,7 +9,7 @@ html, body {
     background-size: cover;
 }
 
-.container-books {
+.container-med {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 20px;
@@ -86,15 +86,13 @@ html, body {
     transform: translateX(-50%);
 }
 
-/* Books */
-
 img {
     width: 200px;
     height: auto;
     text-align: center;
 }
 
-.book {
+.medicine {
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 10px;
     padding: 20px;
@@ -105,7 +103,7 @@ img {
     position: relative;
 }
 
-.book-details {
+.medicine-details {
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 10px;
     padding: 20px;
@@ -115,13 +113,13 @@ img {
     color : #000000;
     position: relative;
 }
-.book img {
+.medicine img {
     max-width: 100%;
     height: auto;
     border-radius: 5px;
 }
 
-.coming-soon {
+.sold-out {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -134,24 +132,24 @@ img {
     text-align: center;
     pointer-events: none;
 }
-.book p, a{
+.medicine p, a{
     text-decoration: none;
     color : #000000;
 }
 
-.book:hover {
+.medicine:hover {
     background-color: #ddd;
 }
 
-.book-info {
+.medicine-info {
     display: none;
 }
 
-.book:hover .book-info {
+.medicine:hover .medicine-info {
     display: block;
 }
 
-.book:hover img {
+.medicine:hover img {
     height: auto;
 }
 
@@ -292,6 +290,18 @@ input[type="text"], input[type="email"], input[type="password"], input[type="fil
 
 .filter-form .buttons:hover {
     background-color:  #005f6b;
+}
+
+
+.filterTextContainer {
+    display: none;
+}
+select[name="filterBy"] {
+    display: inline-block;
+}
+
+select[name="filterBy"] option[value="name"]:checked + .filterTextContainer {
+    display: block;
 }
 
 /* Table */

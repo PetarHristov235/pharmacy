@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="bg">
+
 <head>
     <meta charset="UTF-8">
-    <title>Редактиране</title>
+    <title>Редактирай</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 
@@ -12,10 +14,10 @@
     <div class="topnav-left">
         <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
         <a sec:authorize="hasRole('ADMIN')" th:href="@{/listOrders}">Поръчки</a>
-        <a sec:authorize="hasRole('ADMIN')" th:href="@{/bookStock}">Наличности</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/medicineStock}">Наличности</a>
     </div>
     <div class="topnav-center">
-        <a th:href="@{/}">Книгомания</a>
+        <a th:href="@{/}">Горската аптека</a>
     </div>
 
     <div class="topnav-right">
@@ -25,7 +27,9 @@
         <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
     </div>
 </div>
-<br><br><br>
+<br>
+<br>
+<br>
 
 <h1>Редактиране на книга</h1>
 <div th:if="${param.error}">
@@ -36,7 +40,7 @@
 
 <div class="container">
     <div th:if="${book != null}">
-        <form th:action="@{/editBook}" th:object="${book}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/editMedicine}" th:object="${book}" method="post" enctype="multipart/form-data">
             <input type="hidden" th:field="*{id}" />
             <div class="row">
                 <div class="col-25"><label>Корица</label></div>
@@ -44,19 +48,11 @@
             </div>
             <div class="row">
                 <div class="col-25"><label>Заглавие</label></div>
-                <div class="col-75"><input id="bookName" th:field="*{bookName}" placeholder="Въведи заглавие..." type="text"/></div>
+                <div class="col-75"><input id="medicineName" th:field="*{bookName}" placeholder="Въведи заглавие..." type="text"/></div>
             </div>
             <div class="row">
-                <div class="col-25"><label>Автор</label></div>
-                <div class="col-75"><input id="author" th:field="*{author}" placeholder="Въведи автор..." type="text"/></div>
-            </div>
-            <div class="row">
-                <div class="col-25"><label>Жанр</label></div>
-                <div class="col-75"><input id="genre" th:field="*{genre}" placeholder="Въведи жанр..." type="text"/></div>
-            </div>
-            <div class="row">
-                <div class="col-25"><label>Резюме</label></div>
-                <div class="col-75"><input id="bookDetails" th:field="*{bookDetails}" placeholder="Въведи резюме..." type="text"/></div>
+                <div class="col-25"><label>Детайли</label></div>
+                <div class="col-75"><input id="medicineDetails" th:field="*{medicineDetails}" placeholder="Въведи детайли..." type="text"/></div>
             </div>
             <div class="row">
                 <div class="col-25"><label>Брой</label></div>
@@ -69,7 +65,7 @@
             </div>
         </form>
         <div class="center">
-            <a th:href="@{'/deleteBook/' + ${book.id}}">Изтрий</a>
+            <a th:href="@{'/deleteMedicine/' + ${medicine.id}}">Изтрий</a>
         </div>
     </div>
 </div>
