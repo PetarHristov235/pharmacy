@@ -412,3 +412,40 @@ textarea {
     border: 1px solid #ccc;
     resize: vertical;
 }
+
+.cart {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, height 0.3s ease, width 0.3s ease;
+    text-decoration: none;
+    color: #000000;
+    position: absolute;
+    right: 0;
+}
+
+.cart p, .cart a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.cart:hover {
+    background-color:#ffffff;
+    /*width: 150px; !* Adjust width as needed *!*/
+    /*height: 150px; !* Adjust height as needed *!*/
+}
+
+.cart-info {
+    display: none;
+    position: absolute;
+    /*bottom: -50px; !* Adjust as needed *!*/
+    left: -100px; /* Adjust as needed */
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.cart:hover .cart-info {
+    display: block;
+}

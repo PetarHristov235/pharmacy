@@ -2,8 +2,12 @@ package com.example.demo.controller;
 
 
 import com.example.demo.db.entity.MedicineEntity;
+import com.example.demo.db.entity.UserEntity;
 import com.example.demo.service.MedicineService;
+import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +22,18 @@ import java.util.List;
 public class MedicineController {
     private final MedicineService medicineService;
     private List<MedicineEntity> currentMedicines;
+    private final UserService userService;
 
     @GetMapping("/")
     public String index(Model model) {
         currentMedicines = medicineService.findAllMedicines();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        UserEntity currentUser = userService.getUserByUsername(username);
+
         model.addAttribute("medicines", currentMedicines);
+//        model.addAttribute("items", currentUser.getCartItems());
         return "index";
     }
 

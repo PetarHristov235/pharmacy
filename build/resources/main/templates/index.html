@@ -21,6 +21,9 @@
     </div>
 
     <div class="topnav-right">
+
+
+
         <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
         <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
         <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
@@ -31,6 +34,26 @@
 <br>
 <br>
 
+<!--<div class="cart"  sec:authorize="hasRole('USER')">-->
+<div class="cart" >
+<!--    <div th:if="${items != null}">-->
+        <label>Количка</label>
+        <div class="cart-info">
+            <p>A</p>
+            <p>B</p>
+            <p>C</p>
+
+    <!--        <div th:each="item : ${items}">-->
+    <!--            <p th:text="${item.medicineName}"></p>-->
+    <!--        </div>-->
+            <a class="buttons">Преглед</a>
+        </div>
+<!--    </div>-->
+<!--    <div th:if="${items != null}">-->
+<!--        <p>Количката е празна</p>-->
+<!--    </div>-->
+</div>
+
     <div class="center">
         <div class="dropdown">
             <button class="dropbtn">Сортиране</button>
@@ -39,7 +62,7 @@
                 <a th:href="@{/medicines/sort(sortBy='descending ')}">Я-А</a>
             </div>
         </div>
-        
+
         <div class="dropdown">
             <button class="dropbtn">Рецепта</button>
             <div class="dropdown-content">

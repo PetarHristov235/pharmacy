@@ -21,6 +21,9 @@
     </div>
 
     <div class="topnav-right">
+
+
+
         <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
         <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
         <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
@@ -30,6 +33,26 @@
 <br>
 <br>
 <br>
+
+<!--<div class="cart"  sec:authorize="hasRole('USER')">-->
+<div class="cart" >
+<!--    <div th:if="${items != null}">-->
+        <label>Количка</label>
+        <div class="cart-info">
+            <p>A</p>
+            <p>B</p>
+            <p>C</p>
+
+    <!--        <div th:each="item : ${items}">-->
+    <!--            <p th:text="${item.medicineName}"></p>-->
+    <!--        </div>-->
+            <a class="buttons">Преглед</a>
+        </div>
+<!--    </div>-->
+<!--    <div th:if="${items != null}">-->
+<!--        <p>Количката е празна</p>-->
+<!--    </div>-->
+</div>
 
     <div class="center">
         <div class="dropdown">
@@ -68,6 +91,20 @@
                     <p th:text="${medicine.medicineName}"></p>
                     <p th:text="${medicine.medicineDetails}"></p>
                     <p th:text="${#numbers.formatDecimal(medicine.avgRate, 1, 'COMMA', 2, 'POINT')}"></p>
+
+                    <div class="center" sec:authorize="hasRole('USER')">
+                        <div class="dropdown">
+                            <button class="dropbtn">Бързо добавяне</button>
+                            <div class="dropdown-content">
+                                <a th:href="@{/medicines/addToCart(amount='1')}" th:if="${medicine.stockCount >= 1}">1</a>
+                                <a th:href="@{/medicines/addToCart(amount='2')}" th:if="${medicine.stockCount >= 2}">2</a>
+                                <a th:href="@{/medicines/addToCart(amount='3')}" th:if="${medicine.stockCount >= 3}">3</a>
+                                <a th:href="@{/medicines/addToCart(amount='4')}" th:if="${medicine.stockCount >= 4}">4</a>
+                                <a th:href="@{/medicines/addToCart(amount='5')}" th:if="${medicine.stockCount >= 5}">5</a>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
         </div>
         </a>
