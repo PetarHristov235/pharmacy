@@ -35,44 +35,45 @@ public class MedicineController {
     @GetMapping("/")
     public String index(Model model) {
         currentMedicines = medicineService.findAllMedicines();
+
+        model.addAttribute("medicines", currentMedicines);
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         UserEntity authenticatedUser = userService.getUserByUsername(username);
-        if (authenticatedUser!= null) {
+        if (authenticatedUser != null) {
             cartNumber = authenticatedUser.getCartNumber();
             cartItems = cartItemRepository.findAllCartItemsByCartNumber(cartNumber);
         }
-        model.addAttribute("medicines", currentMedicines);
         model.addAttribute("cartItems", cartItems);
+
         return "index";
     }
 
 
     @GetMapping("/medicines/sort")
     public String sortMedicinesList(@RequestParam String sortBy, Model model) {
-        if (currentMedicines == null) {
-            currentMedicines = medicineService.findAllMedicines();
-        }
         currentMedicines = medicineService.sortMedicines(currentMedicines, sortBy);
         model.addAttribute("medicines", currentMedicines);
+        model.addAttribute("cartItems", cartItems);
         return "index";
     }
+
 
     @GetMapping("/medicines/filter")
     public String filterMedicinesList(@RequestParam String filterBy, Model model) {
-        if (currentMedicines == null) {
-            currentMedicines = medicineService.findAllMedicines();
-        }
-
         currentMedicines = medicineService.filterMedicines(currentMedicines, filterBy);
         model.addAttribute("medicines", currentMedicines);
+        model.addAttribute("cartItems", cartItems);
         return "index";
     }
 
+
     @GetMapping("/medicines/search")
-    public String searchMedicinesList(@RequestParam String filterText, Model model) {
-        currentMedicines = medicineService.searchMedicines(currentMedicines, filterText);
+    public String searchMedicinesList(@RequestParam String searchText, Model model) {
+        currentMedicines = medicineService.searchMedicines(currentMedicines, searchText);
         model.addAttribute("medicines", currentMedicines);
+        model.addAttribute("cartItems", cartItems);
         return "index";
     }
 

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.text.Collator;
+
 
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -44,8 +46,8 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public MedicineEntity saveMedicine(MedicineEntity Medicine) {
-        return medicineRepository.save(Medicine);
+    public MedicineEntity saveMedicine(MedicineEntity medicine) {
+        return medicineRepository.save(medicine);
     }
 
     @Override
@@ -59,18 +61,22 @@ public class MedicineServiceImpl implements MedicineService {
         medicineRepository.save(medicine);
     }
 
+    private final Collator collator = Collator.getInstance(new Locale("bg", "BG"));
+
     @Override
     public List<MedicineEntity> sortMedicines(List<MedicineEntity> medicinesList, String sortBy) {
-            switch (sortBy) {
-                case "ascending":
-                    medicinesList.sort(Comparator.comparing(MedicineEntity::getMedicineName));
-                    break;
-                case "descending":
-                    medicinesList.sort(Comparator.comparing(MedicineEntity::getMedicineName).reversed());
-                    break;
-            }
+        Comparator<MedicineEntity> comparator = Comparator.comparing(MedicineEntity::getMedicineName, collator);
+        switch (sortBy) {
+            case "ascending":
+                medicinesList.sort(comparator);
+                break;
+            case "descending":
+                medicinesList.sort(comparator.reversed());
+                break;
+        }
         return medicinesList;
     }
+
 
     @Override
     public List<MedicineEntity> filterMedicines(List<MedicineEntity> medicinesList, String filterBy) {
@@ -83,20 +89,10 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public List<MedicineEntity> searchMedicines(List<MedicineEntity> medicinesList, String filterText) {
+    public List<MedicineEntity> searchMedicines(List<MedicineEntity> medicinesList, String searchText) {
         List<MedicineEntity> filteredMedicines = new ArrayList<>();
         for (MedicineEntity medicine : medicinesList) {
-            if (matchesIgnoreCaseAndPartial(medicine.getMedicineName(), filterText)) {
-                filteredMedicines.add(medicine);
-            }
-        }
-        return filteredMedicines;
-    }
-
-    private List<MedicineEntity> filterByName(List<MedicineEntity> medicines, String title) {
-        List<MedicineEntity> filteredMedicines = new ArrayList<>();
-        for (MedicineEntity medicine : medicines) {
-            if (matchesIgnoreCaseAndPartial(medicine.getMedicineName(), title)) {
+            if (matchesIgnoreCaseAndPartial(medicine.getMedicineName(), searchText)) {
                 filteredMedicines.add(medicine);
             }
         }
