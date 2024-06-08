@@ -40,7 +40,7 @@
 <div>
 
     <div class="container">
-        <form method="post" role="form" th:action="@{'/confirmOrder/'+${medicine.id}}" th:object="${order}">
+        <form method="post" role="form" th:action="@{'/confirmOrder/'+${cartNumber}}" th:object="${order}">
 
 
             <div class="row">
@@ -57,7 +57,7 @@
 
             <div class="row">
                 <div class="center">
-                    <input type="submit" class="buttons" value="Потвърди">
+                    <input type="submit" class="buttons" value="Поръчай">
                 </div>
             </div>
 

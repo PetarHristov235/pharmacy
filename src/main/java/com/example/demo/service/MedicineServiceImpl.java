@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.db.entity.CartItemEntity;
 import com.example.demo.db.entity.MedicineEntity;
 import com.example.demo.db.repository.MedicineRepository;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -56,9 +58,20 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public void decreaseMedicineStockCount(MedicineEntity medicine) {
-        medicine.setStockCount(medicine.getStockCount() - 1);
-        medicineRepository.save(medicine);
+    @Transactional
+    public void decreaseMedicineStockCount(List<CartItemEntity> cartItems) {
+        for (CartItemEntity cartItem : cartItems) {
+            MedicineEntity medicine = cartItem.getMedicine();
+            int newStockCount = medicine.getStockCount() - cartItem.getQuantity();
+
+            // Ensure stock count doesn't go below zero
+            if (newStockCount < 0) {
+                newStockCount = 0;
+            }
+
+            medicine.setStockCount(newStockCount);
+            medicineRepository.save(medicine);
+        }
     }
 
     private final Collator collator = Collator.getInstance(new Locale("bg", "BG"));

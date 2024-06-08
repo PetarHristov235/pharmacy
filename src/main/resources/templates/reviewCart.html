@@ -3,7 +3,7 @@
       xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="bg">
 <head>
     <meta charset="UTF-8">
-    <title>Поръчки</title>
+    <title>Количка</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 
@@ -11,12 +11,12 @@
 <div class="topnav" id="myNav">
     <div class="topnav-left">
         <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/listOrders}">Поръчки</a>
         <a sec:authorize="hasRole('ADMIN')" th:href="@{/medicineStock}">Наличности</a>
     </div>
     <div class="topnav-center">
         <a th:href="@{/}">Аптека Сияна</a>
     </div>
-
     <div class="topnav-right">
         <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
         <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
@@ -28,43 +28,45 @@
 <br>
 <br>
 
-<div class="center" >
-    <h1>Поръчки</h1>
-</div>
+<h1>Количка</h1>
 
-<div>
+<div th:if="${!cartItems.isEmpty()}">
     <table class="tables">
         <thead >
         <tr>
-            <th>ИД</th>
-            <th>Потребител</th>
-            <th>Телефон</th>
-            <th>Адрес</th>
-            <th>Дата</th>
+            <th>Продукт</th>
+            <th>Брой</th>
+            <th>Единична цена</th>
+            <th>Общо за продукт</th>
             <th>Действия</th>
         </tr>
         </thead >
 
         <tbody>
-        <tr th:each="order : ${orders}">
-
-            <td th:text="${order.id}">id</td>
-            <td th:text="${order.username}">user</td>
-            <td th:text="${order.phoneNumber}">phone</td>
-            <td th:text="${order.address}">price</td>
-            <td th:text="${order.date}">date</td>
-
-            <div >
-                <td>
-                    <a th:href="@{'/deleteOrder/'+${order.id}}">Изтрии</a>
-                </td>
-            </div>
+        <div th:each="item : ${cartItems}">
+            <tr>
+            <td th:text="${item.medicine.getMedicineName()}">name</td>
+            <td th:text="${item.quantity}">quantity</td>
+            <td th:text="${item.medicine.getPrice()}">price</td>
+            <td th:text="${item.medicine.getPrice()*item.quantity}">price</td>
+            <td>
+                <a th:href="@{'/removeOneFromCart/'+${item.id}}">-</a>
+                <a th:href="@{'/removeFromCart/'+${item.id}}">Премахни</a>
+                <a th:if="${item.medicine.getStockCount>=1}" th:href="@{'/addOneToCart/'+${item.id}}">+</a>
+            </td>
         </tr>
+        </div>
+
         </tbody>
     </table>
+
+    <p class="price">Обща цена : <span th:text="${totalPrice}">0.00</span> лв.</p>
+    <br>
+
+    <a class="buttons" th:href="@{'/order/'+${cartNumber}}">Поръчай</a>
 </div>
-
-
-
+<div th:if="${cartItems.isEmpty()}">
+    <h1>Количката е празна!</h1>
+</div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.db.entity.CartItemEntity;
 import com.example.demo.db.entity.MedicineEntity;
 
 import java.util.List;
@@ -12,6 +13,6 @@ public interface MedicineService {
     void deleteMedicineById(Long id);
     List<MedicineEntity> filterMedicines(List<MedicineEntity> MedicinesList, String filterBy);
     List<MedicineEntity> sortMedicines(List<MedicineEntity> MedicinesList, String sortBy);
-    void decreaseMedicineStockCount(MedicineEntity Medicine);
+    void decreaseMedicineStockCount(List<CartItemEntity> cartItems);
     List<MedicineEntity> searchMedicines(List<MedicineEntity> MedicinesList, String filterText);
 }

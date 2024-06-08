@@ -37,7 +37,6 @@
         <thead >
         <tr>
             <th>ИД</th>
-            <th>Продукти</th>
             <th>Потребител</th>
             <th>Телефон</th>
             <th>Адрес</th>
@@ -50,16 +49,14 @@
         <tr th:each="order : ${orders}">
 
             <td th:text="${order.id}">id</td>
-            <td th:text="${order.title}">book</td>
             <td th:text="${order.username}">user</td>
-            <td th:text="${order.phoneNumber}">genre</td>
+            <td th:text="${order.phoneNumber}">phone</td>
             <td th:text="${order.address}">price</td>
             <td th:text="${order.date}">date</td>
 
             <div >
                 <td>
                     <a th:href="@{'/deleteOrder/'+${order.id}}">Изтрии</a>
-                    <a th:href="@{'/remind/'+${order.id}}">Напомни</a>
                 </td>
             </div>
         </tr>

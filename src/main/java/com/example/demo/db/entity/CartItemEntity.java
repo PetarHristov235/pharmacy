@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "cart_item")
 @AllArgsConstructor
@@ -29,4 +31,19 @@ public class CartItemEntity {
 
     @Column (name = "quantity")
     Integer quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    OrderEntity order;
+
+    @Override
+    public String toString() {
+        String medicineName = (medicine != null) ? medicine.getMedicineName() : "N/A";
+        BigDecimal price = (medicine != null) ? medicine.getPrice() : BigDecimal.ZERO;
+        String result = String.format("%s : %dбр. - %s/бр.\n", medicineName, quantity, price);
+        result = result.replace("[", "").replace("]", "").replace(",", "");
+        return result;
+    }
+
+
 }

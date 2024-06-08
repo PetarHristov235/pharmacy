@@ -144,7 +144,7 @@ public class MedicineController {
         } catch (IOException e) {
             return "redirect:/editMedicine/" + medicine.getId() + "?error";
         }
-        return "redirect:/Medicines/" + medicine.getId();
+        return "redirect:/medicines/" + medicine.getId();
     }
 
     @GetMapping(value = "/deleteMedicine/{id}")

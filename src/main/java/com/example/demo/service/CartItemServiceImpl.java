@@ -56,4 +56,10 @@ public class CartItemServiceImpl implements CartItemService {
     public List<CartItemEntity> getAllCartItemsByCartNumber(Long cartNumber) {
         return cartItemRepository.findAllCartItemsByCartNumber(cartNumber);
     }
+
+    @Override
+    @Transactional
+    public void removeCartItemById(Long cartItemId) {
+        cartItemRepository.deleteById(cartItemId);
+    }
 }

@@ -10,4 +10,6 @@ public interface CartItemService {
     List<CartItemEntity> addMedicineToCart(Long medicineId, Integer amount, Long cartNumber);
 
     List<CartItemEntity> getAllCartItemsByCartNumber(Long cartNumber);
+
+    void removeCartItemById(Long cartItemId);
 }

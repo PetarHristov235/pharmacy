@@ -42,8 +42,7 @@
 
                 <div class="center" sec:authorize="hasRole('USER')">
                     <div class="dropdown">
-                        <button class="dropbtn" th:if="${medicine.stockCount > 0}">Бързо
-                            добавяне </button>
+                        <button class="dropbtn" th:if="${medicine.stockCount > 0}">Добавяне</button>
                         <div class="dropdown-content">
                             <form th:each="amount : ${#numbers.sequence(1, medicine.stockCount)}"
                                   th:action="@{'/addToCart/' + ${amount}}"
@@ -64,7 +63,7 @@
     </div>
 
     <div th:if="${medicine == null}">
-        <p>Няма такава книга</p>
+        <p>Няма такова лекарство</p>
     </div>
 </div>
 

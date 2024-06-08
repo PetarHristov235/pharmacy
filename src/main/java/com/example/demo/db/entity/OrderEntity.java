@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.domain.Persistable;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "\"order\"")
@@ -25,8 +27,8 @@ public class OrderEntity implements Persistable<Long> {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "title")
-    private String title;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<CartItemEntity> cartItems;
 
     @Column (name = "date")
     private LocalDate date;
@@ -37,12 +39,16 @@ public class OrderEntity implements Persistable<Long> {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    public OrderEntity(String address, LocalDate date, String phoneNumber, String title, String username) {
+    @Column(name = "total_price")
+    private BigDecimal totalPrice;
+
+    public OrderEntity(String address, LocalDate date, String phoneNumber, List<CartItemEntity> cartItems, String username, BigDecimal totalPrice) {
         this.address = address;
         this.date = date;
         this.phoneNumber = phoneNumber;
-        this.title = title;
+        this.cartItems = cartItems;
         this.username = username;
+        this.totalPrice = totalPrice;
     }
 
     @Override

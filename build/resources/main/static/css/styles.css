@@ -436,15 +436,12 @@ textarea {
 
 .cart:hover {
     background-color:#ffffff;
-    /*width: 150px; !* Adjust width as needed *!*/
-    /*height: 150px; !* Adjust height as needed *!*/
 }
 
 .cart-info {
     display: none;
     position: absolute;
-    /*bottom: -50px; !* Adjust as needed *!*/
-    left: -100px; /* Adjust as needed */
+    left: -100px;
     background-color: #ffffff;
     padding: 10px;
     border-radius: 10px;
@@ -452,4 +449,19 @@ textarea {
 
 .cart:hover .cart-info {
     display: block;
+}
+
+.price {
+    background-color: #bdbdbd;
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+    color: #000000;
+    position: relative;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
 }

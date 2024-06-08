@@ -38,9 +38,10 @@
     </div>
 </div>
 
+<div class="center">
 <div class="container">
-    <div th:if="${book != null}">
-        <form th:action="@{/editMedicine}" th:object="${book}" method="post" enctype="multipart/form-data">
+    <div th:if="${medicine != null}">
+        <form th:action="@{/editMedicine}" th:object="${medicine}" method="post" enctype="multipart/form-data">
             <input type="hidden" th:field="*{id}" />
             <div class="row">
                 <div class="col-25"><label>Корица</label></div>
@@ -77,6 +78,6 @@
         </div>
     </div>
 </div>
-
+</div>
 </body>
 </html>
