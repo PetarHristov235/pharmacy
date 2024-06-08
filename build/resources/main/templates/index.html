@@ -34,27 +34,40 @@
 <br>
 <br>
 
-<!--<div class="cart"  sec:authorize="hasRole('USER')">-->
-<div class="cart" >
-<!--    <div th:if="${items != null}">-->
-        <label>Количка</label>
-        <div class="cart-info">
-            <p>A</p>
-            <p>B</p>
-            <p>C</p>
+<!--&lt;!&ndash;<div class="cart"  sec:authorize="hasRole('USER')">&ndash;&gt;-->
+<!--<div class="cart" >-->
+<!--&lt;!&ndash;    <div th:if="${items != null}">&ndash;&gt;-->
+<!--        <label>Количка</label>-->
+<!--        <div class="cart-info">-->
+<!--            <p>A</p>-->
+<!--            <p>B</p>-->
+<!--            <p>C</p>-->
 
-    <!--        <div th:each="item : ${items}">-->
-    <!--            <p th:text="${item.medicineName}"></p>-->
-    <!--        </div>-->
-            <a class="buttons">Преглед</a>
+<!--    &lt;!&ndash;        <div th:each="item : ${items}">&ndash;&gt;-->
+<!--    &lt;!&ndash;            <p th:text="${item.medicineName}"></p>&ndash;&gt;-->
+<!--    &lt;!&ndash;        </div>&ndash;&gt;-->
+<!--            <a class="buttons">Преглед</a>-->
+<!--        </div>-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    <div th:if="${items != null}">&ndash;&gt;-->
+<!--&lt;!&ndash;        <p>Количката е празна</p>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+<!--</div>-->
+
+<div class="cart">
+    <label>Количка</label>
+    <div class="cart-info">
+        <div th:each="item : ${cartItems}" th:if="${!cartItems.isEmpty()}">
+            <p th:text="${item.medicine.medicineName}"></p>
+            <p th:text="${item.quantity}"></p>
+            <p th:text="${item.medicine.price}"></p>
         </div>
-<!--    </div>-->
-<!--    <div th:if="${items != null}">-->
-<!--        <p>Количката е празна</p>-->
-<!--    </div>-->
+        <p th:unless="${!cartItems.isEmpty()}">Количката е празна</p>
+        <a class="buttons">Преглед</a>
+    </div>
 </div>
 
-    <div class="center">
+<div class="center">
         <div class="dropdown">
             <button class="dropbtn">Сортиране</button>
             <div class="dropdown-content">
@@ -76,7 +89,7 @@
             <button type="submit" class="buttons">Търсене</button>
         </form>
 
-        <a class="buttons" sec:authorize="hasRole('ADMIN')" th:href="@{/addBook}">Добавяне</a>
+        <a class="buttons" sec:authorize="hasRole('ADMIN')" th:href="@{/addMedicine}">Добавяне</a>
     </div>
 
 <div class="container-med">
@@ -91,12 +104,27 @@
                     <p th:text="${medicine.medicineName}"></p>
                     <p th:text="${medicine.medicineDetails}"></p>
                     <p th:text="${#numbers.formatDecimal(medicine.avgRate, 1, 'COMMA', 2, 'POINT')}"></p>
-                </div>
-        </div>
+
+                    <div class="center" sec:authorize="hasRole('USER')">
+                        <div class="dropdown">
+                            <button class="dropbtn" th:if="${medicine.stockCount > 0}">Бързо
+                                добавяне </button>
+                            <div class="dropdown-content">
+                                <form th:each="amount : ${#numbers.sequence(1, medicine.stockCount)}"
+                                      th:action="@{'/addToCart/' + ${amount}}"
+                                      method="post" th:if="${medicine.stockCount > 0}">
+                                    <input type="hidden" th:value="${medicine.id}"
+                                           name="medicineId"/>
+                                    <button type="submit" th:text="${amount}"
+                                            class="dropdown-a"></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            </div>
         </a>
     </div>
 </div>
-
 </body>
-
 </html>

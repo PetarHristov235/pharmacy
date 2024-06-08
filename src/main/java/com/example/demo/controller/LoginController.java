@@ -1,21 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.db.entity.UserEntity;
-import com.example.demo.db.entity.enums.Role;
-import com.example.demo.db.repository.UserRepository;
 import com.example.demo.service.UserService;
 import com.example.demo.util.DataValidation;
 import com.example.demo.util.EmailService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,18 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
-    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    @Autowired
-    private EmailService emailService;
-    @Autowired
-    private UserService userService;
+    private final EmailService emailService;
+    private final UserService userService;
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -47,10 +33,10 @@ public class LoginController {
                                   @RequestParam("password") String password,
                                   Model model) {
 
-        if(userRepository.existByUsernameAndPassword(username, passwordEncoder.encode(password))){
+        if (userService.existUserByUsernameAndPassword(username, password)) {
             return "redirect:/";
 
-        }else{
+        } else {
             return "redirect:/login";
         }
 
@@ -73,17 +59,13 @@ public class LoginController {
             return new ModelAndView("register", "user", user);
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setActive(true);
-        user.setRoles(Role.USER);
-
-        userRepository.save(user);
+        userService.saveUser(user);
         emailService.registrationConfirmationEmail(user.getEmail(), user.getName());
 
         return new ModelAndView("redirect:/login");
     }
 
-    private void validateData(UserEntity user, BindingResult result){
+    private void validateData(UserEntity user, BindingResult result) {
         if (DataValidation.isValidUsername(user.getUsername())) {
             result.rejectValue("username",
                     "invalid.username",

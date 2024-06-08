@@ -29,6 +29,8 @@ public class UserEntity implements Persistable<Long> {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role roles;
+    @Column
+    Long cartNumber;
 
     @Override
     public boolean isNew() {

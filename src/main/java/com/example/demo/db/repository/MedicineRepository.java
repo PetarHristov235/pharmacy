@@ -15,8 +15,8 @@ public interface MedicineRepository extends JpaRepository<MedicineEntity, Long> 
 
     @Query("""
             SELECT b FROM MedicineEntity b
-            WHERE b.medicineName = :bookName""")
-    MedicineEntity findBookByBookName(@Param("bookName") String bookName);
+            WHERE b.medicineName = :medicineName""")
+    MedicineEntity findBookByBookName(@Param("medicineName") String medicineName);
 
     @Query("""
             DELETE FROM MedicineEntity b

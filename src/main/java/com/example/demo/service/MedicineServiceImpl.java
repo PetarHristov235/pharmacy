@@ -105,13 +105,13 @@ public class MedicineServiceImpl implements MedicineService {
 
     private List<MedicineEntity> filterMedicinesWithPrescription(List<MedicineEntity> medicines) {
         return medicines.stream()
-                .filter(MedicineEntity::isPrescriptionRequired)
+                .filter(MedicineEntity::getIsPrescriptionRequired)
                 .collect(Collectors.toList());
     }
 
     private List<MedicineEntity> filterMedicinesWithoutPrescription(List<MedicineEntity> medicines) {
         return medicines.stream()
-                .filter(medicine -> !medicine.isPrescriptionRequired())
+                .filter(medicine -> !medicine.getIsPrescriptionRequired())
                 .collect(Collectors.toList());
     }
 

@@ -36,7 +36,11 @@ public class MedicineEntity implements Persistable<Long> {
     private Integer stockCount;
 
     @Column(name = "prescription_required")
-    private BigDecimal isPrescriptionRequired;
+    private Boolean isPrescriptionRequired;
+
+    @Column(name = "price")
+    private BigDecimal price;
+
     @Lob
     @Column(name = "cover")
     private byte[] cover;
@@ -70,9 +74,5 @@ public class MedicineEntity implements Persistable<Long> {
         } else {
             avgRate = BigDecimal.ZERO;
         }
-    }
-
-    public boolean isPrescriptionRequired() {
-        return this.isPrescriptionRequired != null && this.isPrescriptionRequired.compareTo(BigDecimal.ONE) == 0;
     }
 }

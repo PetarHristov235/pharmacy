@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.db.entity.CartItemEntity;
 import com.example.demo.db.entity.MedicineEntity;
 import com.example.demo.db.entity.UserEntity;
+import com.example.demo.db.repository.CartItemRepository;
+import com.example.demo.service.CartItemService;
 import com.example.demo.service.MedicineService;
 import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,25 +18,32 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 public class MedicineController {
     private final MedicineService medicineService;
-    private List<MedicineEntity> currentMedicines;
     private final UserService userService;
+    private final CartItemService cartItemService;
+    private final CartItemRepository cartItemRepository;
+    private List<MedicineEntity> currentMedicines;
+    private List<CartItemEntity> cartItems = new ArrayList<>();
+    private Long cartNumber;
 
     @GetMapping("/")
     public String index(Model model) {
         currentMedicines = medicineService.findAllMedicines();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-
-        UserEntity currentUser = userService.getUserByUsername(username);
-
+        UserEntity authenticatedUser = userService.getUserByUsername(username);
+        if (authenticatedUser!= null) {
+            cartNumber = authenticatedUser.getCartNumber();
+            cartItems = cartItemRepository.findAllCartItemsByCartNumber(cartNumber);
+        }
         model.addAttribute("medicines", currentMedicines);
-//        model.addAttribute("items", currentUser.getCartItems());
+        model.addAttribute("cartItems", cartItems);
         return "index";
     }
 
@@ -67,6 +77,7 @@ public class MedicineController {
         model.addAttribute("medicines", currentMedicines);
         return "index";
     }
+
     @GetMapping("/medicines/{id}")
     public ModelAndView MedicineDetails(@PathVariable("id") Long id) {
         MedicineEntity medicine = medicineService.getMedicineById(id);
@@ -99,9 +110,9 @@ public class MedicineController {
     public String addMedicine(@ModelAttribute("medicine") MedicineEntity medicine, @RequestParam(
             "image") MultipartFile image) {
         try {
-                if (!image.isEmpty()) {
-                    medicine.setCover(image.getBytes());
-                }
+            if (!image.isEmpty()) {
+                medicine.setCover(image.getBytes());
+            }
             medicineService.saveMedicine(medicine);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -119,7 +130,7 @@ public class MedicineController {
 
     @PostMapping("/editMedicine")
     public String editMedicine(@ModelAttribute MedicineEntity medicine,
-                           @RequestParam("image") MultipartFile image) {
+                               @RequestParam("image") MultipartFile image) {
         try {
             MedicineEntity existingMedicine = medicineService.getMedicineById(medicine.getId());
             if (!image.isEmpty()) {
@@ -137,10 +148,16 @@ public class MedicineController {
         return "redirect:/Medicines/" + medicine.getId();
     }
 
-    @GetMapping(value="/deleteMedicine/{id}")
+    @GetMapping(value = "/deleteMedicine/{id}")
     public String deleteMedicine(@PathVariable Long id) {
         medicineService.deleteMedicineById(id);
         return "redirect:/";
     }
 
+    @PostMapping("/addToCart/{amount}")
+    public String addMedicineToCart(@ModelAttribute("medicineId") Long medicineId,
+                                    @PathVariable Integer amount) {
+        cartItems = cartItemService.addMedicineToCart(medicineId, amount, cartNumber);
+        return "redirect:/";
+    }
 }
