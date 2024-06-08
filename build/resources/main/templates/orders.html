@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="bg">
-
 <head>
     <meta charset="UTF-8">
     <title>Поръчки</title>
@@ -9,14 +8,13 @@
 </head>
 
 <body>
-
 <div class="topnav" id="myNav">
     <div class="topnav-left">
         <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
         <a sec:authorize="hasRole('ADMIN')" th:href="@{/medicineStock}">Наличности</a>
     </div>
     <div class="topnav-center">
-        <a th:href="@{/}">Горската аптека</a>
+        <a th:href="@{/}">Аптека Сияна</a>
     </div>
 
     <div class="topnav-right">

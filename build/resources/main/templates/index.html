@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
       xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="bg">
-
 <head>
     <meta charset="UTF-8">
     <title>Начало</title>
@@ -9,7 +8,6 @@
 </head>
 
 <body>
-
 <div class="topnav" id="myNav">
     <div class="topnav-left">
     <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
@@ -17,13 +15,9 @@
     <a sec:authorize="hasRole('ADMIN')" th:href="@{/medicineStock}">Наличности</a>
     </div>
     <div class="topnav-center">
-        <a th:href="@{/}">Горската аптека</a>
+        <a th:href="@{/}">Аптека Сияна</a>
     </div>
-
     <div class="topnav-right">
-
-
-
         <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
         <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
         <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
@@ -34,36 +28,16 @@
 <br>
 <br>
 
-<!--&lt;!&ndash;<div class="cart"  sec:authorize="hasRole('USER')">&ndash;&gt;-->
-<!--<div class="cart" >-->
-<!--&lt;!&ndash;    <div th:if="${items != null}">&ndash;&gt;-->
-<!--        <label>Количка</label>-->
-<!--        <div class="cart-info">-->
-<!--            <p>A</p>-->
-<!--            <p>B</p>-->
-<!--            <p>C</p>-->
-
-<!--    &lt;!&ndash;        <div th:each="item : ${items}">&ndash;&gt;-->
-<!--    &lt;!&ndash;            <p th:text="${item.medicineName}"></p>&ndash;&gt;-->
-<!--    &lt;!&ndash;        </div>&ndash;&gt;-->
-<!--            <a class="buttons">Преглед</a>-->
-<!--        </div>-->
-<!--&lt;!&ndash;    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;    <div th:if="${items != null}">&ndash;&gt;-->
-<!--&lt;!&ndash;        <p>Количката е празна</p>&ndash;&gt;-->
-<!--&lt;!&ndash;    </div>&ndash;&gt;-->
-<!--</div>-->
-
 <div class="cart">
     <label>Количка</label>
     <div class="cart-info">
         <div th:each="item : ${cartItems}" th:if="${!cartItems.isEmpty()}">
-            <p th:text="${item.medicine.medicineName}"></p>
+            <p th:text="${item.medicine.medicineName}-${item.quantity}"></p>
             <p th:text="${item.quantity}"></p>
             <p th:text="${item.medicine.price}"></p>
         </div>
         <p th:unless="${!cartItems.isEmpty()}">Количката е празна</p>
-        <a class="buttons">Преглед</a>
+        <a th:href="@{/reviewCart}" class="buttons">Преглед</a>
     </div>
 </div>
 

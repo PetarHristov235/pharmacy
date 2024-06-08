@@ -75,4 +75,5 @@ public class MedicineEntity implements Persistable<Long> {
             avgRate = BigDecimal.ZERO;
         }
     }
+
 }

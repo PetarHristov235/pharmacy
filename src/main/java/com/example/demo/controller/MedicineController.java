@@ -71,8 +71,6 @@ public class MedicineController {
 
     @GetMapping("/medicines/search")
     public String searchMedicinesList(@RequestParam String filterText, Model model) {
-
-
         currentMedicines = medicineService.searchMedicines(currentMedicines, filterText);
         model.addAttribute("medicines", currentMedicines);
         return "index";

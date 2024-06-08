@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class DataValidation {
     public static boolean isValidPhoneNumber(String number) {
-        String regex = "^[+]?(\\d{1,2})?[\\s.-]?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$";
+        String regex = "^\\+?\\d{10,12}$";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(number);
@@ -14,7 +14,7 @@ public class DataValidation {
     }
 
     public static boolean isValidUsername(String username) {
-        String regex = "^[A-Za-z0-9'-. \\_]{0,30}$";
+        String regex = "^[A-Za-zА-Яа-я0-9'-.\\_]{0,30}$";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(username);
@@ -23,7 +23,7 @@ public class DataValidation {
     }
 
     public static boolean isValidName(String name) {
-        String regex = "^[A-Z][a-z]{0,29}$";
+        String regex = "^[A-Za-zА-Яа-я ]{0,30}$";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(name);
@@ -32,7 +32,7 @@ public class DataValidation {
     }
 
     public static boolean isValidEmail(String email){
-        String regex = "^[\\w\\-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        String regex = "^[\\w\\-\\.]+@([\\w-]{3,5}+\\.)+[\\w-]{2,4}$";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
@@ -41,12 +41,11 @@ public class DataValidation {
     }
 
     public static boolean isValidPassword(String password){
-        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?!.* ).{8,20}$";
+        String regex = "^.{5,}$";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(password);
 
         return !matcher.matches();
     }
-
 }
