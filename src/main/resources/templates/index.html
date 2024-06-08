@@ -28,15 +28,14 @@
 <br>
 <br>
 
-<div class="cart">
+<div class="cart" sec:authorize="hasRole('USER')">
     <label>Количка</label>
     <div class="cart-info">
         <div th:each="item : ${cartItems}" th:if="${!cartItems.isEmpty()}">
-            <p th:text="${item.medicine.medicineName}-${item.quantity}"></p>
-            <p th:text="${item.quantity}"></p>
-            <p th:text="${item.medicine.price}"></p>
+            <p th:text="${item.medicine.medicineName}+ ' - ' +${item.quantity}"></p>
+
         </div>
-        <p th:unless="${!cartItems.isEmpty()}">Количката е празна</p>
+        <p th:if="${cartItems.isEmpty()}">Количката е празна</p>
         <a th:href="@{/reviewCart}" class="buttons">Преглед</a>
     </div>
 </div>
@@ -45,8 +44,8 @@
         <div class="dropdown">
             <button class="dropbtn">Сортиране</button>
             <div class="dropdown-content">
-                <a th:href="@{/medicines/sort(sortBy='ascending ')}">А-Я</a>
-                <a th:href="@{/medicines/sort(sortBy='descending ')}">Я-А</a>
+                <a th:href="@{/medicines/sort(sortBy='ascending')}">А-Я</a>
+                <a th:href="@{/medicines/sort(sortBy='descending')}">Я-А</a>
             </div>
         </div>
 
@@ -59,7 +58,7 @@
         </div>
 
         <form action="/medicines/search" method="get" class="filter-form">
-            <input type="text" id="filterText" name="filterText" placeholder="Търси...">
+            <input type="text" id="searchText" name="searchText" placeholder="Търси...">
             <button type="submit" class="buttons">Търсене</button>
         </form>
 
@@ -74,15 +73,13 @@
                     <div th:if="${medicine.stockCount == 0}" class="sold-out">Изчерпано</div>
                     <img th:src="'data:image/jpeg;base64,' + ${medicine.coverBase64encoded}" alt="Medicine cover"/>
                 </div>
-                <div class="medicine-details">
-                    <p th:text="${medicine.medicineName}"></p>
+                <p th:text="${medicine.medicineName}"></p>
+                <div class="medicine-info">
                     <p th:text="${medicine.medicineDetails}"></p>
                     <p th:text="${#numbers.formatDecimal(medicine.avgRate, 1, 'COMMA', 2, 'POINT')}"></p>
-
                     <div class="center" sec:authorize="hasRole('USER')">
                         <div class="dropdown">
-                            <button class="dropbtn" th:if="${medicine.stockCount > 0}">Бързо
-                                добавяне </button>
+                            <button class="dropbtn" th:if="${medicine.stockCount > 0}">Бързо добавяне </button>
                             <div class="dropdown-content">
                                 <form th:each="amount : ${#numbers.sequence(1, medicine.stockCount)}"
                                       th:action="@{'/addToCart/' + ${amount}}"
