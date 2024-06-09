@@ -1,9 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.db.entity.CartItemEntity;
+import com.example.demo.db.entity.MedicineEntity;
 import com.example.demo.db.entity.UserEntity;
 import com.example.demo.db.repository.CartItemRepository;
 import com.example.demo.service.CartItemServiceImpl;
+import com.example.demo.service.MedicineService;
 import com.example.demo.service.UserServiceImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +27,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartController {
     @Autowired
-    UserServiceImpl userService;
-    @Autowired
     CartItemRepository cartItemRepository;
     @Autowired
     CartItemServiceImpl cartItemService;
+    @Autowired
+    UserServiceImpl userService;
+    @Autowired
+    MedicineService medicineService;
+
+
     private List<CartItemEntity> cartItems = new ArrayList<>();
     private Long cartNumber;
 
@@ -65,6 +71,9 @@ public class CartController {
         CartItemEntity cartItem = cartItemRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid cart item ID"));
         cartItem.setQuantity(cartItem.getQuantity() + 1);
         cartItemRepository.save(cartItem);
+        MedicineEntity medicine = medicineService.getMedicineById(cartItem.getMedicine().getId());
+        medicine.setStockCount(medicine.getStockCount() - 1);
+        medicineService.saveMedicine(medicine);
         return "redirect:/reviewCart";
     }
 
@@ -77,6 +86,9 @@ public class CartController {
         } else {
             cartItemRepository.delete(cartItem);
         }
+        MedicineEntity medicine = medicineService.getMedicineById(cartItem.getMedicine().getId());
+        medicine.setStockCount(medicine.getStockCount() + 1);
+        medicineService.saveMedicine(medicine);
         return "redirect:/reviewCart";
     }
 }
