@@ -11,7 +11,7 @@ html, body {
 
 .container-med {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     grid-gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
@@ -54,6 +54,8 @@ html, body {
     justify-content: center;
     align-items: center;
 }
+
+
 .center {
     text-align: center;
     width: 100%;
@@ -116,7 +118,11 @@ html, body {
     text-decoration: none;
     color : #000000;
     position: relative;
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
 }
+
 .medicine img {
     max-width: 100%;
     height: auto;
