@@ -3,7 +3,7 @@
       xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="bg">
 <head>
     <meta charset="UTF-8">
-    <title>Оценки</title>
+    <title>Начало</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 
@@ -27,18 +27,25 @@
 <br>
 <br>
 <br>
-<h1>Оценки</h1>
-<table class="tables">
-    <tr>
-        <th>Оценка</th>
-        <th>Коментар</th>
-    </tr>
-    <th:block th:each="rate : ${rates}">
-        <tr>
-            <td th:text="${rate.rate}"></td>
-            <td th:text="${rate.comment}"></td>
-        </tr>
-    </th:block>
-</table>
+<h1>Оценете ни</h1>
+<form action="/saveRating" method="post" class="rate-form">
+    <div>
+        <label for="rate">Оценка:</label>
+        <select id="rate" name="rate">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </div>
+    <div>
+        <label for="comment">Коментар:</label><br>
+        <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
+    </div>
+    <div>
+        <button type="submit">Оцени</button>
+    </div>
+</form>
 </body>
 </html>

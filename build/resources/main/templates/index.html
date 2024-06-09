@@ -13,6 +13,7 @@
     <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
     <a sec:authorize="hasRole('ADMIN')" th:href="@{/listOrders}">Поръчки</a>
     <a sec:authorize="hasRole('ADMIN')" th:href="@{/medicineStock}">Наличности</a>
+    <a th:href="@{/showRates}">Оценки</a>
     </div>
     <div class="topnav-center">
         <a th:href="@{/}">Аптека Сияна</a>
@@ -76,7 +77,6 @@
                 <p th:text="${medicine.medicineName}"></p>
                 <div class="medicine-info">
                     <p th:text="${medicine.medicineDetails}"></p>
-                    <p th:text="${#numbers.formatDecimal(medicine.avgRate, 1, 'COMMA', 2, 'POINT')}"></p>
                     <div class="center" sec:authorize="hasRole('USER')">
                         <div class="dropdown">
                             <button class="dropbtn" th:if="${medicine.stockCount > 0}">Бързо добавяне </button>
