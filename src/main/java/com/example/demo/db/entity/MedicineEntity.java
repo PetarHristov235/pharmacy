@@ -45,9 +45,6 @@ public class MedicineEntity implements Persistable<Long> {
     @Column(name = "cover")
     private byte[] cover;
 
-    @OneToMany
-    @JoinColumn(name = "medicine_id")
-    private List<RateEntity> rateEntity;
 
     @Transient
     private String coverBase64encoded;
@@ -69,11 +66,6 @@ public class MedicineEntity implements Persistable<Long> {
             coverBase64encoded = base64Encoded;
         }
 
-        if (rateEntity != null && !rateEntity.isEmpty()) {
-            avgRate = BigDecimal.valueOf(rateEntity.stream().mapToInt(RateEntity::getRate).average().orElse(0));
-        } else {
-            avgRate = BigDecimal.ZERO;
-        }
     }
 
 }

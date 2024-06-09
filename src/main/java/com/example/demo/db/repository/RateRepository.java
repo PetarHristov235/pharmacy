@@ -9,8 +9,5 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface RateRepository extends JpaRepository<RateEntity,Long> {
-    @Query("""
-            SELECT rate FROM RateEntity rate where rate.medicineId = :medicineId
-            """)
-    List<RateEntity> findRatesByMedicineId(@Param("medicineId") Long medicineId);
+
 }

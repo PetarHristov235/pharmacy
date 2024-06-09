@@ -25,9 +25,6 @@ public class RateEntity implements Persistable<Long> {
     @Column(name = "comment",length = 3000)
     private String comment;
 
-    @Column(name = "medicine_id")
-    private Long medicineId;
-
     @Override
     public boolean isNew() {
         return false;

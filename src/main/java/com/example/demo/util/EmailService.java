@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
-
+    String link = "http://localhost:8080/rateUs";
     public void orderConfirmationEmail(String receiverEmail,
                                        String receiverName,
                                        String orderedItems,
@@ -42,6 +42,9 @@ public class EmailService {
                 "Моля, прегледайте горепосочените детайли и ни уведомете, ако имате въпроси или притеснения. Ако трябва да направите някакви промени в поръчката си, моля, свържете се с нас възможно най-скоро.\n" +
                 "\n" +
                 "Благодарим Ви, че ни се доверихте, за да се погрижим за вашето здраве!\n"+
+                "\n"+
+                "Ако сте доволни от нашето обслужване може да ни оцените като кликнете тук:\n"+
+                link+
                 "\n"+
                 "Поздрави,\n"+
                 "Екипът на Аптека Сияна"

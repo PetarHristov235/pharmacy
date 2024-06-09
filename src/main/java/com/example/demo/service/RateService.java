@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface RateService {
     void saveRating(RateEntity rateEntity);
-    List<RateEntity> findRatesByMedicineId(Long id);
+    List<RateEntity> findAll();
 }

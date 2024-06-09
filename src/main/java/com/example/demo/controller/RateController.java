@@ -18,28 +18,28 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RateController {
     private final RateService rateService;
 
-    @GetMapping("/rateMedicine/{id}")
-    ModelAndView rateMedicine(@PathVariable Long id, Model model) {
+    @GetMapping("/rateUs")
+    ModelAndView rateForm() {
         RateEntity rateEntity = new RateEntity();
-        rateEntity.setMedicineId(id);
-        model.addAttribute("rateEntity", rateEntity);
-        return new ModelAndView("rateMedicine");
+        return new ModelAndView("rateUs",
+                "rate",
+                rateEntity);
     }
 
     @PostMapping("/saveRating")
     public String saveRating(@ModelAttribute RateEntity rateEntity,
-                             BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+                             RedirectAttributes redirectAttributes) {
         if (rateEntity.getRate() == null) {
             redirectAttributes.addFlashAttribute("error", "Моля, изберете оценка.");
-            return "redirect:/rateMedicine/" + rateEntity.getMedicineId();
+            return "redirect:/rateMedicine/" + rateEntity.getId();
         }
         rateService.saveRating(rateEntity);
         return "redirect:/";
     }
 
-    @GetMapping("/showRates/{id}")
-    ModelAndView showRates(@PathVariable Long id, Model model) {
-        model.addAttribute("rates", rateService.findRatesByMedicineId(id));
+    @GetMapping("/showRates")
+    ModelAndView showRates( Model model) {
+        model.addAttribute("rates", rateService.findAll());
         return new ModelAndView("showRates");
     }
 }

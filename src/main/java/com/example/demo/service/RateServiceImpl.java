@@ -17,9 +17,8 @@ public class RateServiceImpl implements RateService {
         rateRepository.save(rateEntity);
     }
 
-
     @Override
-    public List<RateEntity> findRatesByMedicineId(Long medicineId) {
-        return rateRepository.findRatesByMedicineId(medicineId);
+    public List<RateEntity> findAll() {
+        return rateRepository.findAll();
     }
 }
