@@ -39,16 +39,19 @@
         <span th:text="${userProfile.email}"></span>
     </div>
     <div>
+        <h1>Поръчки</h1>
         <table class="tables">
             <thead >
             <tr>
-                <th>Поръчки</th>
+                <th>Дата</th>
+                <th>Сума</th>
             </tr>
             </thead >
 
             <tbody>
             <tr th:each="order : ${userOrders}">
-                <td th:text="${order.products}">products</td>
+                <td th:text="${order.date}">date</td>
+                <td th:text="${order.totalPrice}">price</td>
             </tr>
             </tbody>
         </table>
