@@ -35,6 +35,7 @@ public class MedicineController {
     @GetMapping("/")
     public String index(Model model) {
         currentMedicines = medicineService.findAllMedicines();
+        medicineService.sortMedicines(currentMedicines,"id");
 
         model.addAttribute("medicines", currentMedicines);
 

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -49,6 +50,7 @@ public class CartController {
         if (authenticatedUser != null) {
             cartNumber = authenticatedUser.getCartNumber();
             cartItems = cartItemRepository.findAllCartItemsByCartNumber(cartNumber);
+            cartItems.sort(Comparator.comparing(CartItemEntity::getId));
             model.addAttribute("cartItems", cartItems);
 
             BigDecimal totalPrice = cartItems.stream()

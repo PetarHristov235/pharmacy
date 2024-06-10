@@ -57,22 +57,7 @@ public class MedicineServiceImpl implements MedicineService {
         medicineRepository.deleteById(id);
     }
 
-    @Override
-    @Transactional
-    public void decreaseMedicineStockCount(List<CartItemEntity> cartItems) {
-        for (CartItemEntity cartItem : cartItems) {
-            MedicineEntity medicine = cartItem.getMedicine();
-            int newStockCount = medicine.getStockCount() - cartItem.getQuantity();
 
-            // Ensure stock count doesn't go below zero
-            if (newStockCount < 0) {
-                newStockCount = 0;
-            }
-
-            medicine.setStockCount(newStockCount);
-            medicineRepository.save(medicine);
-        }
-    }
 
     private final Collator collator = Collator.getInstance(new Locale("bg", "BG"));
 
@@ -86,6 +71,8 @@ public class MedicineServiceImpl implements MedicineService {
             case "descending":
                 medicinesList.sort(comparator.reversed());
                 break;
+            case "id":
+                medicinesList.sort(Comparator.comparing(MedicineEntity::getId));
         }
         return medicinesList;
     }

@@ -13,6 +13,5 @@ public interface MedicineService {
     void deleteMedicineById(Long id);
     List<MedicineEntity> filterMedicines(List<MedicineEntity> MedicinesList, String filterBy);
     List<MedicineEntity> sortMedicines(List<MedicineEntity> MedicinesList, String sortBy);
-    void decreaseMedicineStockCount(List<CartItemEntity> cartItems);
     List<MedicineEntity> searchMedicines(List<MedicineEntity> MedicinesList, String filterText);
 }
