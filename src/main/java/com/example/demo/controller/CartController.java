@@ -64,7 +64,12 @@ public class CartController {
 
     @GetMapping("/removeFromCart/{cartItemId}")
     public String removeFromCart(@PathVariable Long cartItemId) {
+        CartItemEntity cartItem = cartItemRepository.findById(cartItemId).orElseThrow(() -> new IllegalArgumentException("Invalid cart item ID"));
         cartItemService.removeCartItemById(cartItemId);
+
+        MedicineEntity medicine = medicineService.getMedicineById(cartItem.getMedicine().getId());
+        medicine.setStockCount(medicine.getStockCount() + cartItem.getQuantity());
+        medicineService.saveMedicine(medicine);
         return "redirect:/reviewCart";
     }
 
