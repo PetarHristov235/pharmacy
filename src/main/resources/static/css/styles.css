@@ -18,18 +18,6 @@ html, body {
     padding-top: 50px;
 }
 
-.image-container {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-}
-
-img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-}
-
 .container {
     margin:auto;
     width: 50%;
@@ -127,7 +115,17 @@ img {
     position: relative;
 }
 
+.medicine img{
+    width: 200px;
+    height: 200px;
+    object-fit: fill;
+}
 
+.medicine-details img{
+    width: 200px;
+    height: 200px;
+    object-fit: fill;
+}
 
 .sold-out {
     position: absolute;
@@ -319,7 +317,6 @@ select[name="filterBy"] option[value="name"]:checked + .filterTextContainer {
 
 .tables {
     border-collapse : collapse;
-    /* /\ */
     width: 70%;
     margin-left: auto;
     margin-right: auto;

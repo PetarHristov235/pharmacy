@@ -70,7 +70,7 @@
     <div th:each="medicine : ${medicines}">
         <a th:href="@{/medicines/{id}(id=${medicine.id})}">
             <div class="medicine">
-                <div class="image-container">
+                <div>
                     <div th:if="${medicine.stockCount == 0}" class="sold-out">Изчерпано</div>
                     <img th:src="'data:image/jpeg;base64,' + ${medicine.coverBase64encoded}" alt="Medicine cover"/>
                 </div>

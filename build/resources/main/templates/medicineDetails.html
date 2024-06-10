@@ -29,11 +29,11 @@
 <br>
 <br>
 
-<!--    <div class="wrapper-medicine">-->
+    <div class="wrapper-medicine">
         <div th:if="${medicine != null}">
             <div class="medicine-details">
                 <h2><span th:text="${medicine.medicineName}"></span></h2>
-                    <div class="image-container">
+                    <div >
                         <img th:src="'data:image/jpeg;base64,' + ${medicine.coverBase64encoded}" alt="Medicine cover" />
                     </div>
                 <div>
