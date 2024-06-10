@@ -35,28 +35,34 @@ public class SecurityConfig {
                                         "/register",
                                         "/registerProcessing",
                                         "/loginProcessing",
+                                        "/showRates",
                                         "/medicines/sort",
                                         "/medicines/filter",
-                                        "/medicines/*")
+                                        "/medicines/search",
+                                        "/medicines/*",
+                                        "/reviewCart",
+                                        "/removeFromCart/*",
+                                        "/addOneToCart/*",
+                                        "removeOneFromCart/*"
+                                        )
                                 .permitAll()
 
                                 .requestMatchers("/random",
-                                        "/orderMedicine/*",
+                                        "/order/*",
                                         "/confirmOrder/*",
-                                        "/rateMedicine/*",
+                                        "/rateUs*",
                                         "/saveRating",
                                         "/addToCart/*")
                                 .hasRole("USER")
 
-                                .requestMatchers("/medicineStock",
-                                        "/addMedicine",
+                                .requestMatchers("/addMedicine",
                                         "/saveMedicine",
+                                        "/editMedicine",
                                         "/editMedicine/*",
+                                        "/medicineStock",
                                         "/deleteMedicine/*",
                                         "/listOrders",
                                         "/deleteOrder/*",
-                                        "/remind/*",
-                                        "/showRates/*",
                                         "/listUsers",
                                         "/deleteUser/*",
                                         "/banUser/*",
