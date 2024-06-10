@@ -44,6 +44,4 @@ public class CartItemEntity {
         result = result.replace("[", "").replace("]", "").replace(",", "");
         return result;
     }
-
-
 }

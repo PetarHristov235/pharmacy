@@ -30,6 +30,9 @@ public class OrderEntity implements Persistable<Long> {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<CartItemEntity> cartItems;
 
+    @Column (name = "items")
+    private String items;
+
     @Column (name = "date")
     private LocalDate date;
 
@@ -42,11 +45,11 @@ public class OrderEntity implements Persistable<Long> {
     @Column(name = "total_price")
     private BigDecimal totalPrice;
 
-    public OrderEntity(String address, LocalDate date, String phoneNumber, List<CartItemEntity> cartItems, String username, BigDecimal totalPrice) {
+    public OrderEntity(String address, LocalDate date, String phoneNumber, String items, String username, BigDecimal totalPrice) {
         this.address = address;
         this.date = date;
         this.phoneNumber = phoneNumber;
-        this.cartItems = cartItems;
+        this.items = items;
         this.username = username;
         this.totalPrice = totalPrice;
     }

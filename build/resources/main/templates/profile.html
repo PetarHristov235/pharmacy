@@ -44,6 +44,7 @@
             <thead >
             <tr>
                 <th>Дата</th>
+                <th>Продукти</th>
                 <th>Сума</th>
             </tr>
             </thead >
@@ -51,6 +52,7 @@
             <tbody>
             <tr th:each="order : ${userOrders}">
                 <td th:text="${order.date}">date</td>
+                <td th:text="${order.items}">items</td>
                 <td th:text="${order.totalPrice}">price</td>
             </tr>
             </tbody>

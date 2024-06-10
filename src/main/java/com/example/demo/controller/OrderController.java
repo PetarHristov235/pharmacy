@@ -60,6 +60,7 @@ public class OrderController {
                                     BindingResult result) {
 
         List<CartItemEntity> cartItems = cartItemRepository.findAllCartItemsByCartNumber(cartNumber);
+
         UserEntity receiver=userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
         if (DataValidation.isValidPhoneNumber(order.getPhoneNumber())) {
@@ -77,11 +78,22 @@ public class OrderController {
             totalPrice = totalPrice.add(itemPrice);
         }
 
+        StringBuilder items = new StringBuilder();
+        int size = cartItems.size();
+        for (int i = 0; i < size; i++) {
+            CartItemEntity cartItem = cartItems.get(i);
+            items.append(cartItem.getMedicine().getMedicineName()).append(" - ").append(cartItem.getQuantity());
+            if (i < size - 1) {
+                items.append(",");
+            }
+        }
+
+
         OrderEntity newOrder = new OrderEntity(
                 order.getAddress(),
                 LocalDate.now(),
                 order.getPhoneNumber(),
-                order.getCartItems(),
+                items.toString(),
                 receiver.getUsername(),
                 totalPrice
         );

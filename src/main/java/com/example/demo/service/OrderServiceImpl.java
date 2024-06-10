@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.db.entity.CartItemEntity;
 import com.example.demo.db.entity.OrderEntity;
 import com.example.demo.db.repository.OrderRepository;
+import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -15,8 +17,8 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
 
-
     @Override
+    @Transactional
     public void saveOrder(OrderEntity order) {
         orderRepository.save(order);
     }
