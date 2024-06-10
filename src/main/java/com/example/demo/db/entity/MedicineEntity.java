@@ -38,6 +38,9 @@ public class MedicineEntity implements Persistable<Long> {
     @Column(name = "prescription_required")
     private Boolean isPrescriptionRequired;
 
+    @Column(name = "is_special")
+    private Boolean isSpecial;
+
     @Column(name = "price")
     private BigDecimal price;
 

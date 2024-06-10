@@ -25,21 +25,6 @@ public class MedicineServiceImpl implements MedicineService {
         return medicineRepository.findAll();
     }
 
-    @Override
-    public MedicineEntity getRandomMedicine() {
-        List<MedicineEntity> medicinesList = medicineRepository.findAll();
-        if (medicinesList.isEmpty()) {
-            return null;
-        }
-        Random random = new Random();
-        int randomIndex = random.nextInt(medicinesList.size());
-        MedicineEntity randomMedicine = medicinesList.get(randomIndex);
-
-        if (randomMedicine.getStockCount() == 0) {
-            getRandomMedicine();
-        }
-        return randomMedicine;
-    }
 
     @Override
     public MedicineEntity getMedicineById(Long id) {
@@ -84,6 +69,7 @@ public class MedicineServiceImpl implements MedicineService {
             {
                 case "withPrescription" -> medicinesList = filterMedicinesWithPrescription(medicinesList);
                 case "withoutPrescription" -> medicinesList = filterMedicinesWithoutPrescription(medicinesList);
+                case "special" -> medicinesList = filterMedicinesSpecial(medicinesList);
             }
         return medicinesList;
     }
@@ -106,8 +92,16 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     private List<MedicineEntity> filterMedicinesWithoutPrescription(List<MedicineEntity> medicines) {
+
         return medicines.stream()
                 .filter(medicine -> !medicine.getIsPrescriptionRequired())
+                .filter(medicine -> !medicine.getIsSpecial())
+                .collect(Collectors.toList());
+    }
+
+    private List<MedicineEntity> filterMedicinesSpecial(List<MedicineEntity> medicines) {
+        return medicines.stream()
+                .filter(MedicineEntity::getIsSpecial)
                 .collect(Collectors.toList());
     }
 

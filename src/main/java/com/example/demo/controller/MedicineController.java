@@ -63,7 +63,7 @@ public class MedicineController {
 
     @GetMapping("/medicines/filter")
     public String filterMedicinesList(@RequestParam String filterBy, Model model) {
-        currentMedicines = medicineService.filterMedicines(currentMedicines, filterBy);
+        currentMedicines = medicineService.filterMedicines(medicineService.findAllMedicines(), filterBy);
         model.addAttribute("medicines", currentMedicines);
         model.addAttribute("cartItems", cartItems);
         return "index";
@@ -72,7 +72,7 @@ public class MedicineController {
 
     @GetMapping("/medicines/search")
     public String searchMedicinesList(@RequestParam String searchText, Model model) {
-        currentMedicines = medicineService.searchMedicines(currentMedicines, searchText);
+        currentMedicines = medicineService.searchMedicines(medicineService.findAllMedicines(), searchText);
         model.addAttribute("medicines", currentMedicines);
         model.addAttribute("cartItems", cartItems);
         return "index";

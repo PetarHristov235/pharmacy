@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface MedicineService {
     List<MedicineEntity> findAllMedicines();
-    MedicineEntity getRandomMedicine();
     MedicineEntity getMedicineById(Long id);
     MedicineEntity saveMedicine(MedicineEntity Medicine);
     void deleteMedicineById(Long id);

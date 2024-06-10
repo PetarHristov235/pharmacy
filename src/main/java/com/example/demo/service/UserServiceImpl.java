@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     public UserEntity saveUser(UserEntity user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
-        user.setRoles(Role.USER);
+        user.setRoles(Role.ADMIN);
         user = userRepository.save(user);
         user.setCartNumber(Instant.now().toEpochMilli());
         return user;
