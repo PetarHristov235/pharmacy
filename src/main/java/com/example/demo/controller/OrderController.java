@@ -84,7 +84,7 @@ public class OrderController {
             CartItemEntity cartItem = cartItems.get(i);
             items.append(cartItem.getMedicine().getMedicineName()).append(" - ").append(cartItem.getQuantity());
             if (i < size - 1) {
-                items.append(",");
+                items.append(", ");
             }
         }
 
