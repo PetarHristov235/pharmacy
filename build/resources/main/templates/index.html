@@ -78,6 +78,7 @@
                 <p th:text="${medicine.medicineName}"></p>
                 <div class="medicine-info">
                     <p th:text="${medicine.medicineDetails}"></p>
+                    <p th:text="${medicine.price + 'лв.'}"></p>
                     <div class="center" sec:authorize="hasRole('USER')">
                         <div class="dropdown">
                             <button class="dropbtn" th:if="${medicine.stockCount > 0}">Бързо добавяне </button>
