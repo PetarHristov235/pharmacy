@@ -140,6 +140,7 @@ public class MedicineController {
             existingMedicine.setMedicineName(medicine.getMedicineName());
             existingMedicine.setMedicineDetails(medicine.getMedicineDetails());
             existingMedicine.setStockCount(medicine.getStockCount());
+            existingMedicine.setPrice(medicine.getPrice());
 
             medicineService.saveMedicine(existingMedicine);
         } catch (IOException e) {
