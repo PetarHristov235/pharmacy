@@ -38,6 +38,7 @@
             <th>Име</th>
             <th>Детайли</th>
             <th>Налични бройки</th>
+            <th>Срок на годност</th>
         </tr>
         </thead>
         <tbody>
@@ -46,6 +47,7 @@
             <td th:text="${medicine.medicineName}"></td>
             <td th:text="${medicine.medicineDetails}"></td>
             <td th:text="${medicine.stockCount}"></td>
+            <td th:text="${medicine.expiryDate}"></td>
         </tr>
         </tbody>
     </table>

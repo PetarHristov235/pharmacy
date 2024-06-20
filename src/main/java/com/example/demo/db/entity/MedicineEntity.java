@@ -10,6 +10,7 @@ import org.springframework.data.domain.Persistable;
 
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -48,6 +49,8 @@ public class MedicineEntity implements Persistable<Long> {
     @Column(name = "cover")
     private byte[] cover;
 
+    @Column(name = "expiry_date")
+    LocalDate expiryDate;
 
     @Transient
     private String coverBase64encoded;

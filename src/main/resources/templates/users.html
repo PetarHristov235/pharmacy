@@ -54,7 +54,7 @@
         <td th:text="${user.active}">active</td>
         <td>
             <a th:href="@{'/deleteUser/'+${user.id}}">Изтриване</a>
-            <a th:href="@{'/banUser/'+${user.id}}" th:if="${user.active}">Бан</a>
+            <a th:href="@{'/banUser/'+${user.id}}" th:if="${user.active}">Деактивирай</a>
             <a th:href="@{'/activateUser/'+${user.id}}" th:if="${not user.active}">Активирай</a>
         </td>
     </tr>

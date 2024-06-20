@@ -31,7 +31,7 @@
 <br>
 <br>
 
-<h1>Редактиране на книга</h1>
+<h1>Редактиране на лекарство</h1>
 <div th:if="${param.error}">
     <div class="center">
         Редактирането не е успешно!
@@ -70,6 +70,10 @@
             <div class="row">
                 <div class="col-25"><label>Цена</label></div>
                 <div class="col-75"><input id="price" th:field="*{price}" placeholder="Въведи цена..." type="text"/></div>
+            </div>
+            <div class="row">
+                <div class="col-25"><label>Срок на годност</label></div>
+                <div class="col-75"><input id="expiryDate" th:field="*{expiryDate}" type="date"/></div>
             </div>
             <div class="row">
                 <div class="center">
