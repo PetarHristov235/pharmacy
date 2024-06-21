@@ -39,6 +39,7 @@
                 <div>
                     <p>Детайли : <span th:text="${medicine.medicineDetails}"></span></p>
                     <p>Цена : <span th:text="${medicine.price + 'лв.'}"></span></p>
+                    <p>Срок на годност : <span th:text="${medicine.expiryDate}"></span></p>
                     <div class="center" sec:authorize="hasRole('USER')">
                         <div class="dropdown">
                             <button class="dropbtn" th:if="${medicine.stockCount > 0}">Добавяне</button>

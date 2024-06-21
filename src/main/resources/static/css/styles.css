@@ -384,6 +384,7 @@ select[name="filterBy"] option[value="name"]:checked + .filterTextContainer {
     margin-top: 5px;
     border-radius: 5px;
     text-align: center;
+    z-index: 1000;
 }
 
 @media screen and (max-width: 600px) {

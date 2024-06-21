@@ -8,11 +8,13 @@ import com.example.demo.db.repository.CartItemRepository;
 import com.example.demo.service.CartItemService;
 import com.example.demo.service.MedicineService;
 import com.example.demo.service.UserService;
+import com.example.demo.util.DataValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -107,48 +109,65 @@ public class MedicineController {
     }
 
     @PostMapping("/saveMedicine")
-    public String addMedicine(@ModelAttribute("medicine") MedicineEntity medicine, @RequestParam(
-            "image") MultipartFile image) {
-        try {
+    public ModelAndView addMedicine(@ModelAttribute("medicine") MedicineEntity medicine,
+                                    @RequestParam("image") MultipartFile image,
+                                    BindingResult result) {
+        try{
             if (!image.isEmpty()) {
                 medicine.setCover(image.getBytes());
             }
-            medicineService.saveMedicine(medicine);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return "redirect:/";
+
+        if (DataValidation.isValidExpirationDate(medicine.getExpiryDate())) {
+            result.rejectValue("expiryDate",
+                    "invalid.expirationDate",
+                    "Невалиден срок на годност!");
+
+            return new ModelAndView("addMedicine", "medicine", medicine);
+        }
+
+        medicineService.saveMedicine(medicine);
+        return new ModelAndView("redirect:/");
     }
 
     @GetMapping("/editMedicine/{id}")
     public ModelAndView editMedicineForm(@PathVariable(value = "id") long id) {
         MedicineEntity medicine = medicineService.getMedicineById(id);
-        ModelAndView modelAndView = new ModelAndView("editMedicine");
-        modelAndView.addObject("medicine", medicine);
-        return modelAndView;
+        return new ModelAndView("editMedicine", "medicine", medicine);
     }
+
 
     @PostMapping("/editMedicine")
-    public String editMedicine(@ModelAttribute MedicineEntity medicine,
-                               @RequestParam("image") MultipartFile image) {
+    public ModelAndView editMedicine(@ModelAttribute MedicineEntity medicine,
+                                     BindingResult result,
+                                     @RequestParam("image") MultipartFile image) {
         try {
-            MedicineEntity existingMedicine = medicineService.getMedicineById(medicine.getId());
             if (!image.isEmpty()) {
-                existingMedicine.setCover(image.getBytes());
+                medicine.setCover(image.getBytes());
             }
-
-            existingMedicine.setMedicineName(medicine.getMedicineName());
-            existingMedicine.setMedicineDetails(medicine.getMedicineDetails());
-            existingMedicine.setStockCount(medicine.getStockCount());
-            existingMedicine.setPrice(medicine.getPrice());
-            existingMedicine.setExpiryDate(medicine.getExpiryDate());
-
-            medicineService.saveMedicine(existingMedicine);
         } catch (IOException e) {
-            return "redirect:/editMedicine/" + medicine.getId() + "?error";
+            throw new RuntimeException(e);
         }
-        return "redirect:/medicines/" + medicine.getId();
+
+        if (DataValidation.isValidExpirationDate(medicine.getExpiryDate())) {
+            result.rejectValue("expiryDate", "invalid.expirationDate", "Невалиден срок на годност!");
+            return new ModelAndView("editMedicine").addObject("medicine", medicine).addObject("org.springframework.validation.BindingResult.medicine", result);
+        }
+
+        MedicineEntity existingMedicine = medicineService.getMedicineById(medicine.getId());
+
+        existingMedicine.setMedicineName(medicine.getMedicineName());
+        existingMedicine.setMedicineDetails(medicine.getMedicineDetails());
+        existingMedicine.setStockCount(medicine.getStockCount());
+        existingMedicine.setPrice(medicine.getPrice());
+        existingMedicine.setExpiryDate(medicine.getExpiryDate());
+
+        medicineService.saveMedicine(existingMedicine);
+        return new ModelAndView("redirect:/medicines/" + medicine.getId());
     }
+
 
     @GetMapping(value = "/deleteMedicine/{id}")
     public String deleteMedicine(@PathVariable Long id) {

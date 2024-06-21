@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
-      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="bg">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org" lang="bg">
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +8,6 @@
 </head>
 
 <body>
-
 <div class="topnav" id="myNav">
     <div class="topnav-left">
         <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
@@ -19,7 +17,6 @@
     <div class="topnav-center">
         <a th:href="@{/}">Аптека Сияна</a>
     </div>
-
     <div class="topnav-right">
         <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
         <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
@@ -32,19 +29,13 @@
 <br>
 
 <h1>Редактиране на лекарство</h1>
-<div th:if="${param.error}">
-    <div class="center">
-        Редактирането не е успешно!
-    </div>
-</div>
 
-<div class="center">
 <div class="container">
     <div th:if="${medicine != null}">
-        <form th:action="@{/editMedicine}" th:object="${medicine}" method="post" enctype="multipart/form-data">
+        <form method="post" role="form" th:action="@{/editMedicine}" th:object="${medicine}" enctype="multipart/form-data">
             <input type="hidden" th:field="*{id}" />
             <div class="row">
-                <div class="col-25"><label>Корица</label></div>
+                <div class="col-25"><label>Изображение</label></div>
                 <div class="col-75"><input id="image" name="image" type="file" accept="image/*"/></div>
             </div>
             <div class="row">
@@ -71,21 +62,24 @@
                 <div class="col-25"><label>Цена</label></div>
                 <div class="col-75"><input id="price" th:field="*{price}" placeholder="Въведи цена..." type="text"/></div>
             </div>
+
             <div class="row">
                 <div class="col-25"><label>Срок на годност</label></div>
                 <div class="col-75"><input id="expiryDate" th:field="*{expiryDate}" type="date"/></div>
             </div>
+            <p th:if="${#fields.hasErrors('expiryDate')}" th:errors="*{expiryDate}" class="error-message"></p>
+
             <div class="row">
                 <div class="center">
                     <input type="submit" class="buttons" value="Запази">
                 </div>
             </div>
         </form>
+
         <div class="center">
             <a th:href="@{'/deleteMedicine/' + ${medicine.id}}">Изтрий</a>
         </div>
     </div>
-</div>
 </div>
 </body>
 </html>

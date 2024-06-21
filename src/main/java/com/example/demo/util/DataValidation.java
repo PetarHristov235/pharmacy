@@ -1,5 +1,6 @@
 package com.example.demo.util;
 
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,5 +48,10 @@ public class DataValidation {
         Matcher matcher = pattern.matcher(password);
 
         return !matcher.matches();
+    }
+
+    public static boolean isValidExpirationDate(LocalDate date){
+        LocalDate todayDate = LocalDate.now();
+        return  date.isBefore(todayDate);
     }
 }
